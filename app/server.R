@@ -1,11 +1,12 @@
 # Define server logic required to draw a histogram ----
-server <- function(input, output,session) {
+server <- function(input, output, session) {
 
   # Download a dataset
   download.file(
     'https://raw.githubusercontent.com/CrumpLab/webr-chord-similarity/main/first_order.csv',
     'first_order.csv'
   )
+
 
   # Read the data
   df_first_order = read.csv("first_order.csv")
