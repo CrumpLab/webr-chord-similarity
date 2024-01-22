@@ -1,6 +1,12 @@
 # Define server logic required to draw a histogram ----
 server <- function(input, output, session) {
 
+  webr::install("DT")
+  webr::install("dplyr")
+
+  library(DT)
+  library(dplyr)
+
   # Download a dataset
   download.file(
     'https://raw.githubusercontent.com/CrumpLab/webr-chord-similarity/main/first_order.csv',
