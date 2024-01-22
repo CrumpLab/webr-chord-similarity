@@ -1,5 +1,5 @@
 # Define server logic required to draw a histogram ----
-server <- function(input, output) {
+server <- function(input, output,session) {
 
   # Download a dataset
   download.file(
@@ -10,23 +10,49 @@ server <- function(input, output) {
   # Read the data
   df_first_order = read.csv("first_order.csv")
 
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
-  output$distPlot <- renderPlot({
+  #update selectors
+  chord_names <- unique(df_first_order$chord_names)
 
-    x    <- df_first_order$C
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  updateSelectizeInput(session,'chord', label = "Select chord",
+                       choices = chord_names)
 
-    hist(x, breaks = bins, col = "#75AADB", border = "white",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
+  key_names <- unique(df_first_order$key)
 
-    })
+  updateSelectizeInput(session,'keys', label = "Select Key",
+                       choices = c("all",key_names))
+
+  chord_types <- unique(df_first_order$type)
+
+  updateSelectizeInput(session,'chord_type', label = "Select type",
+                       choices = c("all",chord_types))
+
+  observe({
+
+    validate(
+      need(input$chord != "","none")
+    )
+
+    selected_data <- df_first_order %>%
+      select(type,key,chord_names,input$chord)
+
+
+    if(input$keys != "all"){
+      selected_data <- selected_data %>%
+        filter(key == input$keys)
+    }
+
+    if(input$chord_type != "all"){
+      selected_data <- selected_data %>%
+        filter(type == input$chord_type)
+    }
+
+    output$sim_table <- DT::renderDT({
+
+      return(selected_data)
+
+    }, options = list(pageLength=10, order = list(3,'desc')), rownames=FALSE,
+    escape=FALSE, selection = 'none')
+
+  })
 
 }

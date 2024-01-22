@@ -2,7 +2,7 @@
 ui <- fluidPage(
 
   # App title ----
-  titlePanel("Hello Shiny!"),
+  titlePanel("Chord Similarity tool"),
 
   # Sidebar layout with input and output definitions ----
   sidebarLayout(
@@ -11,11 +11,12 @@ ui <- fluidPage(
     sidebarPanel(
 
       # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
+      selectInput("chord", label = "chord",
+                  choices = NULL, selected = "C"),
+      selectInput("keys", label = "keys",
+                  choices = NULL, selected = "all"),
+      selectInput("chord_type", label = "chord type",
+                  choices = NULL, selected = "all")
 
     ),
 
@@ -23,7 +24,8 @@ ui <- fluidPage(
     mainPanel(
 
       # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
+      #plotOutput(outputId = "distPlot")
+      DT::dataTableOutput("sim_table")
 
     )
   )
