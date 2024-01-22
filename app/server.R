@@ -3,7 +3,7 @@ server <- function(input, output) {
 
   # Download a dataset
   download.file(
-    'https://raw.githubusercontent.com/crumplab/webr-chord-similarity/raw-data/main/first_order.csv',
+    'https://raw.githubusercontent.com/CrumpLab/webr-chord-similarity/main/first_order.csv',
     'first_order.csv'
   )
 
