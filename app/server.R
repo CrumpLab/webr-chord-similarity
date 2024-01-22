@@ -1,11 +1,11 @@
+webr::install("DT")
+webr::install("dplyr")
+
+library(DT)
+library(dplyr)
+
 # Define server logic required to draw a histogram ----
 server <- function(input, output, session) {
-
-  webr::install("DT")
-  webr::install("dplyr")
-
-  library(DT)
-  library(dplyr)
 
   # Download a dataset
   download.file(
