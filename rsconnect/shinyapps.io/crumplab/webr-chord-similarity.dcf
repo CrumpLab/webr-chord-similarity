@@ -1,0 +1,12 @@
+name: webr-chord-similarity
+title: webr-chord-similarity
+username: crumplab
+account: crumplab
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10998344
+bundleId: 8172769
+url: https://crumplab.shinyapps.io/webr-chord-similarity/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
